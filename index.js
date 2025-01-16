@@ -5,6 +5,7 @@ const port = process.env.NOTES_APP_PORT || 8080;
 
 app.use(express.json());
 
+
 let notes = [
   {
     id: 1,
@@ -19,6 +20,7 @@ function generateId() {
   return notes.length + 1;
 }
 
+
 app.get("/notes", (req, res) => {
   res.json(notes);
 });
@@ -28,11 +30,13 @@ app.get("/notes/:id", (req, res) => {
   res.json(note || {});
 });
 
+
 app.post("/notes", (req, res) => {
   const newNote = { ...req.body, id: generateId() };
   notes.push(newNote);
   res.status(201).json(newNote);
 });
+
 
 app.put("/notes/:id", (req, res) => {
   const index = notes.findIndex((n) => n.id === parseInt(req.params.id));
@@ -44,6 +48,7 @@ app.put("/notes/:id", (req, res) => {
   }
 });
 
+
 app.delete("/notes/:id", (req, res) => {
   const index = notes.findIndex((n) => n.id === parseInt(req.params.id));
   if (index !== -1) {
@@ -53,6 +58,7 @@ app.delete("/notes/:id", (req, res) => {
     res.status(404).json({ message: "Note not found" });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
